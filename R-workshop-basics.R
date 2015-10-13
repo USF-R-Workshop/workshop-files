@@ -73,7 +73,7 @@ names(d00)
 ## Set your working directory.
 ## Where is R currently pointing to?
 getwd()
-setwd("/Users/yannet/teaching/R-workshop/")
+setwd("/Users/yannet/teaching/USF-R-Workshop/workshop-files")
 
 ## Load data set into a data frame
 ?read.csv # help for this function
@@ -215,7 +215,7 @@ summary(d$payAmount) ## there are some missing values
 
 ## equivalent to d4 <- d[,c("sex", "payAmount")]
 d4 <- subset(d, select = c("sex", "payAmount")) 
-# Remove observations with missing values.
+## Remove observations with missing values.
 d4 <- na.omit(d4)
 d4$sex <- factor(d4$sex)
 levels(d4$sex) <- c("Male", "Female")
@@ -236,6 +236,8 @@ d4q
 
 ## boxplot to compare payAmount distribution versus sex
 boxplot(d4$payAmount ~ d4$sex)
+## How can we improve this plot?
+
 
 ## Suppose I want the mean and the median in the same dataframe
 ## Fist change names then merge
