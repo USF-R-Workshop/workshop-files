@@ -1,4 +1,4 @@
-# Code part 1 of "R workshop at USF" in 2015 
+# Code for "USF R workshop 2015" 
 
 ## Variable assignments
 a <- 64
