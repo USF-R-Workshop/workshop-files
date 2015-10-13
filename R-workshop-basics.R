@@ -49,7 +49,7 @@ length(x)
 lenght(y)
 z <- x*y
 x^2
-x <- rnorm(10) # rnorm have a default mean and variance
+x <- rnorm(10) # rnorm has a default mean and variance
 abs(x)
 x > 0 
 y <- x > 2 | x < -2
