@@ -1,4 +1,4 @@
-# Code part 1 of "R workshop at USF" in 20015 
+# Code part 1 of "R workshop at USF" in 2015 
 
 ## Variable assignments
 a <- 64
@@ -70,8 +70,8 @@ d00 <- data.frame(index=vec1, normal=vec2, factor=vec3, binom=vec4)
 ## You can change column names using "names"
 names(d00)
 
-# Set your working directory.
-# Where is R currently pointing to?
+## Set your working directory.
+## Where is R currently pointing to?
 getwd()
 setwd("/Users/yannet/teaching/R-workshop/")
 
@@ -95,9 +95,8 @@ d[["educ"]]
 
 table(d$educ)
 summary(d$educ) 
-## R is treating educ as a numeric variable
+## R is treating educ as a numeric variable. How do we know that?
 ## educ is a categorical variable
-## How do we know that?
 ## use factor for categorical variables
 d$educ <- factor(d$educ)
 
@@ -120,15 +119,15 @@ levels(d$educ) <- educ_strings
 # let's try again
 educ <- table(d$educ)
 barplot(educ)
-barplot(educ, las=2) # make label text perpendicular to axis 
+barplot(educ, las=2) # get labels text perpendicular to axis 
 barplot(educ, las=2, main="Education Levels")
 
 png("educ.png")
 barplot(educ, las=2)
 dev.off()
-# look to see the file saved in your working directory
+## look to see the file saved in your working directory
 
-# Just pleople with College degrees
+## Data set of pleople with College degrees
 dcol <- subset(d, d$educ == "College")
 table(dcol$educ)
 
@@ -140,39 +139,39 @@ table(dcolplus$educ)
 dcolplus$educ <- droplevels(dcolplus$educ)
 table(dcolplus$educ)
 
-# Subseting data frames
-# Just interested in the fist 10 rows
+## Subseting data frames
+## Just interested in the fist 10 rows
 dr10 <- d[1:10,]
-# A subset of the columns
+## A subset of the columns
 n <- c("age", "educ", "internetUse")
 dc3 <- d[,n]
 str(dc3)
 head(dc3)
 
-### Do you think it make sense to merge some of these vars
-### for example G1-8 + G9-11 = G1-11
-### Vocational either with some college or high-school?
+## Do you think it make sense to merge some of these vars
+## for example G1-8 + G9-11 = G1-11
+## Vocational either with some college or high-school?
 
-# We can define a new variable
-# Easier if we convert them first to characters 
+## We can define a new variable
+## Easier if we convert them first to characters 
 d$educ <- as.character(d$educ)
 d$neweduc <- ifelse(d$educ %in% c("G1-8","G9-11"), "G1-11", d$educ)
 d$neweduc <- ifelse(d$neweduc %in% c("Vocational"), "HS", d$neweduc)
 
 barplot(table(d$neweduc), las=2)
 
-### we have to get these variables back in some order
+## We have to get these variables back in some order
 n <- unique(d$newedu) ## getting a vector with the new variables
 n
 n_order <- n[c(5, 3, 1 , 2, 4, 6)]
 d$neweduc <- factor(d$neweduc, n_order)
 
 barplot(table(d$neweduc), las=2)
-                
+
 ## Relationship between education and internet use
 ## Age and internet use
 dd <- table(d$neweduc, d$internetUse)
-percent <- 100*dd[,1]/ (dd[,2] + dd[,1])
+percent <- 100 * dd[,1]/ (dd[,2] + dd[,1])
 dd 
 
 barplot(percent, las=2)
@@ -180,7 +179,7 @@ barplot(percent[1:5], las=2)
 barplot(percent[1:5], ylab="Percent of user that use Internet",
         las=2)
 
-### let's look at age
+## let's look at age
 table(d$age)
 summary(d$age)
 quantile(d$age, prob=seq(0,1,0.1))
@@ -209,10 +208,9 @@ barplot(percent, xlab="Age Group", ylab="Percent of internet users")
 ## Time for practice
 ## What is the relationship between income and internet use?
 
-##################################
+
 ## Sex and payAmount
 ## Do males pay more for online content?
-###################################
 summary(d$payAmount) ## there are some missing values
 
 ## equivalent to d4 <- d[,c("sex", "payAmount")]
@@ -236,11 +234,11 @@ d4median
 d4q <- aggregate(d4["payAmount"], d4["sex"], quantile, probs = seq(0, 1, 0.1))
 d4q
 
-# Do you guys know what a boxplot is?
+## boxplot to compare payAmount distribution versus sex
 boxplot(d4$payAmount ~ d4$sex)
 
-# Suppose I want the mean and the median in the same dataframe
-# fist change names then merge
+## Suppose I want the mean and the median in the same dataframe
+## Fist change names then merge
 names(d4mean)
 names(d4mean)[2] <- "payAmount.mean"
 names(d4mean)
@@ -250,9 +248,9 @@ dmm <- merge(d4mean, d4median, by="sex")
 dmm
 
 
-# FUNCTIONS
-# let's write a function that changes the names of columns
-# in a dataframe
+## FUNCTIONS
+## let's write a function that changes the names of columns
+## in a dataframe
 change_name <- function(d, index, newname) {
   names(d)[index] <- newname
   d # returns 
@@ -261,9 +259,8 @@ change_name <- function(d, index, newname) {
 d4median2 <- change_name(d4median, 2, "median")
 d4median2
 
-# We can define default values
-# The last expression evaluated in a function becomes the
-# return value
+## We can define default values
+## The last expression evaluated in a function becomes the return value
 change_name <- function(d, index=2, newname="median") {
   names(d)[index] <- newname
   d # returns 
